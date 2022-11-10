@@ -1,14 +1,20 @@
 ﻿@model IEnumerable<Hotel_Management_System.Models.RoomUsage>
-
+@using Hotel_Management_System.Data
+@inject ApplicationDbContext _context
 @{
     ViewData["Title"] = "Index";
+    List<RoomType> collection = _context.RoomType.ToList();
+    Console.WriteLine(collection.Count);
 }
 
-<h1>Index</h1>
+<h1>Bookings</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@foreach (var item in collection)
+{<p>
+    <a href="/RoomUsages/Create?roomType=@item.Type">Add New @item.Type Room Booking</a>
+    <hr />
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
