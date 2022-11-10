@@ -12,10 +12,10 @@ namespace Hotel_Management_System.Models
         public DateTime DateOut { get; set; }
         public int RoomId { get; set; }
         public Room Room { get; set; }
-
-        public int UserId { get; set; }
+        [Required]
+        public string UserId { get; set; }
         public User User { get; set; }
 
-        public string Status { get; set; } 
+        public string Status { get; set; } = "stayed";
     }
 }

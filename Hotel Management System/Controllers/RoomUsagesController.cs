@@ -44,15 +44,14 @@ namespace Hotel_Management_System.Controllers
             {
                 return NotFound();
             }
-
             return View(roomUsage);
         }
 
         // GET: RoomUsages/Create
-        public IActionResult Create()
+        public IActionResult Create(string roomType)
         {
-            ViewData["RoomId"] = new SelectList(_context.Room, "Id", "RoomNo");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Address");
+            ViewData["RoomId"] = new SelectList(_context.Room.Where(r => r.RoomType.Type == roomType && r.status == "free"), "Id", "RoomNo");
+            ViewData["UserId"] = new SelectList(_context.Users.Where((u) => true), "Id", "UserName");
             return View();
         }
 
@@ -61,16 +60,21 @@ namespace Hotel_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DateIn,DateOut,RoomId,UserId,status")] RoomUsage roomUsage)
+        public async Task<IActionResult> Create(string roomType, [Bind("Id,DateIn,DateOut,RoomId,UserId,status")] RoomUsage roomUsage)
         {
             if (ModelState.IsValid)
             {
+                var room = _context.Room.Find(roomUsage.RoomId);
+                _context.Room.Attach(room);
+                room.status = "occupied";
+                _context.Update(room);
                 _context.Add(roomUsage);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RoomId"] = new SelectList(_context.Room, "Id", "RoomNo", roomUsage.RoomId);
-            ViewData["UserId"] = new SelectList(_context.Room, "Id", "UserName", roomUsage.UserId);
+            ViewData["RoomId"] = new SelectList(_context.Room.Where(r => r.RoomType.Type == roomType), "Id", "RoomNo", roomUsage.RoomId);
+            ViewData["UserId"] = new SelectList(
+                _context.Users, "Id", "UserName", roomUsage.RoomId);
             return View(roomUsage);
         }
 
@@ -88,6 +92,8 @@ namespace Hotel_Management_System.Controllers
                 return NotFound();
             }
             ViewData["RoomId"] = new SelectList(_context.Room, "Id", "RoomNo", roomUsage.RoomId);
+            ViewData["UserId"] = new SelectList(
+                _context.Users, "Id", "UserName", roomUsage.RoomId);
             return View(roomUsage);
         }
 
@@ -124,6 +130,8 @@ namespace Hotel_Management_System.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RoomId"] = new SelectList(_context.Room, "Id", "RoomNo", roomUsage.RoomId);
+            ViewData["UserId"] = new SelectList(
+                _context.Users, "Id", "UserName", roomUsage.RoomId);
             return View(roomUsage);
         }
 

@@ -28,6 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.RoomType)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
             @if (User.IsInRole("admin"))
             {
                 <th></th>
@@ -49,6 +52,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RoomType.Type)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
                 @if (User.IsInRole("admin"))
                 {
                     <td>
