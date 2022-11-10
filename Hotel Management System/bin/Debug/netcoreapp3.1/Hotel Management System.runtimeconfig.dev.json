@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\vadga\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\vadga\\.nuget\\packages"
+    ]
+  }
+}
