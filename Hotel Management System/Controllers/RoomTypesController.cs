@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Hotel_Management_System.Data;
 using Hotel_Management_System.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hotel_Management_System.Controllers
 {
+    [Authorize]
     public class RoomTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -44,6 +46,7 @@ namespace Hotel_Management_System.Controllers
         }
 
         // GET: RoomTypes/Create
+        [Authorize(Roles ="admin")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +57,7 @@ namespace Hotel_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create([Bind("ID,Type")] RoomType roomType)
         {
             if (ModelState.IsValid)
@@ -66,6 +70,7 @@ namespace Hotel_Management_System.Controllers
         }
 
         // GET: RoomTypes/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +91,7 @@ namespace Hotel_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Type")] RoomType roomType)
         {
             if (id != roomType.ID)
@@ -117,6 +123,7 @@ namespace Hotel_Management_System.Controllers
         }
 
         // GET: RoomTypes/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +144,7 @@ namespace Hotel_Management_System.Controllers
         // POST: RoomTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var roomType = await _context.RoomType.FindAsync(id);

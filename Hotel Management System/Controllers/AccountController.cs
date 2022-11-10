@@ -17,7 +17,7 @@ namespace Hotel_Management_System.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            return View(db.Users.ToListAsync());
+            return View();
         }
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signManager, ApplicationDbContext db)

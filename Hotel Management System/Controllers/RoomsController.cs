@@ -58,6 +58,7 @@ namespace Hotel_Management_System.Controllers
         // POST: Rooms/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,RoomNo,Name,Description,RoomTypeId")] Room room)
@@ -73,6 +74,7 @@ namespace Hotel_Management_System.Controllers
         }
 
         // GET: Rooms/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -94,6 +96,7 @@ namespace Hotel_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,RoomNo,Name,Description,RoomTypeId")] Room room)
         {
             if (id != room.Id)
@@ -126,6 +129,7 @@ namespace Hotel_Management_System.Controllers
         }
 
         // GET: Rooms/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,6 +151,7 @@ namespace Hotel_Management_System.Controllers
         // POST: Rooms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var room = await _context.Room.FindAsync(id);
