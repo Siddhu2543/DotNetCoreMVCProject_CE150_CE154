@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Hotel_Management_System.Models.RoomUsage>
+@using Hotel_Management_System.Data
+@inject ApplicationDbContext _context
+@{
+    ViewData["Title"] = "Bookings";
+}
+
+<h1>Your Bookings</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Room.RoomNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateIn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.RoomNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

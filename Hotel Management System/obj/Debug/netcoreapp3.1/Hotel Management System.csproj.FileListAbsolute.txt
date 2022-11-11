@@ -185,3 +185,6 @@ C:\Users\vadga\source\repos\Hotel Management System\Hotel Management System\obj\
 C:\Users\vadga\source\repos\Hotel Management System\Hotel Management System\obj\Debug\netcoreapp3.1\Razor\Views\RoomUsages\Edit.cshtml.g.cs
 C:\Users\vadga\source\repos\Hotel Management System\Hotel Management System\obj\Debug\netcoreapp3.1\Razor\Views\RoomUsages\Index.cshtml.g.cs
 C:\Users\vadga\source\repos\Hotel Management System\Hotel Management System\obj\Debug\netcoreapp3.1\Razor\Views\Account\Index.cshtml.g.cs
+C:\Users\vadga\source\repos\Hotel Management System\Hotel Management System\bin\Debug\netcoreapp3.1\libman.json
+C:\Users\vadga\source\repos\Hotel Management System\Hotel Management System\obj\Debug\netcoreapp3.1\Razor\Views\Account\Details.cshtml.g.cs
+C:\Users\vadga\source\repos\Hotel Management System\Hotel Management System\obj\Debug\netcoreapp3.1\Razor\Views\RoomUsages\ForUser.cshtml.g.cs

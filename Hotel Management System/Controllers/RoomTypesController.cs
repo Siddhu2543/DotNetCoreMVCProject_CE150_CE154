@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Hotel_Management_System.Data;
 using Hotel_Management_System.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Hotel_Management_System.Controllers
 {
@@ -15,10 +18,12 @@ namespace Hotel_Management_System.Controllers
     public class RoomTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public RoomTypesController(ApplicationDbContext context)
+        public RoomTypesController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: RoomTypes
@@ -58,10 +63,21 @@ namespace Hotel_Management_System.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Create([Bind("ID,Type")] RoomType roomType)
+        public async Task<IActionResult> Create([Bind("ID,Type, RoomImg")] RoomType roomType, IFormFile RoomImg)
         {
             if (ModelState.IsValid)
             {
+                if(RoomImg.Length > 0)
+                {
+                    var uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "rooms");
+                    var fileName = Guid.NewGuid().ToString() + "_" + RoomImg.FileName;
+                    var filePath = Path.Combine(uploadFolder, fileName);
+                    var imgUrl = "/rooms/"+fileName;
+                    using (var stream = System.IO.File.Create(filePath)){
+                        await RoomImg.CopyToAsync(stream);
+                    }
+                    roomType.RoomImgUrl = imgUrl;
+                }
                 _context.Add(roomType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -92,7 +108,7 @@ namespace Hotel_Management_System.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Type")] RoomType roomType)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Type, RoomImg, RoomImgUrl")] RoomType roomType, IFormFile RoomImg)
         {
             if (id != roomType.ID)
             {
@@ -103,6 +119,7 @@ namespace Hotel_Management_System.Controllers
             {
                 try
                 {
+
                     _context.Update(roomType);
                     await _context.SaveChangesAsync();
                 }
@@ -118,6 +135,10 @@ namespace Hotel_Management_System.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                Console.WriteLine(1);
             }
             return View(roomType);
         }

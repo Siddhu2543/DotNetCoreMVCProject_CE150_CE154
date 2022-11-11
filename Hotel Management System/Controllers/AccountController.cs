@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hotel_Management_System.Controllers
@@ -14,10 +15,16 @@ namespace Hotel_Management_System.Controllers
         private UserManager<User> _userManager;
         private readonly ApplicationDbContext db;
 
-        [AllowAnonymous]
+        [Authorize(Roles ="admin")]
         public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await db.Users.ToListAsync());
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Details()
+        {
+            return View(await db.Users.FirstOrDefaultAsync(u => u.UserName == User.Identity.Name));
         }
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signManager, ApplicationDbContext db)

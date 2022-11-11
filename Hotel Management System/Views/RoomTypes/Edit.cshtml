@@ -18,6 +18,15 @@
                 <input asp-for="Type" class="form-control" />
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
+            <div class="d-none form-group">
+                <label asp-for="RoomImg" class="control-label"></label>
+                <input asp-for="RoomImg" class="form-control" accept="image/png, image/jpg, image/jpeg, image/webp" value="@Model.RoomImgUrl" />
+                <span asp-validation-for="RoomImg" class="text-danger"></span>
+            </div>
+            <div class="d-none form-group">
+                <label asp-for="RoomImgUrl" class="control-label"></label>
+                <input asp-for="RoomImgUrl" class="form-control" value="@Model.RoomImgUrl" />
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
